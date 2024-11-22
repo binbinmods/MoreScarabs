@@ -34,11 +34,11 @@ namespace MoreScarabs{
         // and then use config = Config.Bind() to set the title, default value, and description of the config.
         // It automatically creates the appropriate configs.
         
-        public static ConfigEntry<bool> GuaranteedSpawn { get; set; }
-        public static ConfigEntry<bool> OnlySpawnJades { get; set; }
-        public static ConfigEntry<int> PercentChanceToSpawn { get; set; }
+        // public static ConfigEntry<bool> GuaranteedSpawn { get; set; }
+        // public static ConfigEntry<bool> OnlySpawnJades { get; set; }
+        // public static ConfigEntry<int> PercentChanceToSpawn { get; set; }
 
-        internal int ModDate = int.Parse(DateTime.Today.ToString("yyyyMMdd"));
+        internal int ModDate = 20241024; //int.Parse(DateTime.Today.ToString("yyyyMMdd"));
         private readonly Harmony harmony = new(PluginInfo.PLUGIN_GUID);
         internal static ManualLogSource Log;
         private void Awake()
@@ -47,10 +47,11 @@ namespace MoreScarabs{
             Log = Logger;
             Log.LogInfo($"{PluginInfo.PLUGIN_GUID} {PluginInfo.PLUGIN_VERSION} has loaded!");
             
-            GuaranteedSpawn = Config.Bind(new ConfigDefinition("Debug", "Guaranteed Spawn"), true, new ConfigDescription("It true, will guarantee 1 Scarab to spawn at the start of round 2."));
-            OnlySpawnJades = Config.Bind(new ConfigDefinition("Debug", "Only Spawn Jades"), true, new ConfigDescription("If true, will force all scarabs spawned to be Jade"));
-            PercentChanceToSpawn = Config.Bind(new ConfigDefinition("Debug", "Percent Chance to Spawn"), 7, new ConfigDescription("Set the percent chance for a scarab to spawn, overwritten by Guaranteed Spawn)"));
+            // GuaranteedSpawn = Config.Bind(new ConfigDefinition("Debug", "Guaranteed Spawn"), true, new ConfigDescription("It true, will guarantee 1 Scarab to spawn at the start of round 2."));
+            // OnlySpawnJades = Config.Bind(new ConfigDefinition("Debug", "Only Spawn Jades"), true, new ConfigDescription("If true, will force all scarabs spawned to be Jade"));
+            // PercentChanceToSpawn = Config.Bind(new ConfigDefinition("Debug", "Percent Chance to Spawn"), 7, new ConfigDescription("Set the percent chance for a scarab to spawn, overwritten by Guaranteed Spawn)"));
             
+            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} Config Values. Spawn: " + GuaranteedSpawn.Value + " Jade: " + OnlySpawnJades.Value + " Percent: " + PercentChanceToSpawn.Value);
 
             // Register with Obeliskial Essentials
             RegisterMod(
@@ -64,6 +65,9 @@ namespace MoreScarabs{
 
             // apply patches
             harmony.PatchAll();
+
+            Log.LogInfo($"{PluginInfo.PLUGIN_GUID} post patch");
+            
         }
     }
 }

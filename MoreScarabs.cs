@@ -13,8 +13,16 @@ namespace MoreScarabs
 
     [HarmonyPatch] //DO NOT REMOVE/CHANGE
 
-    public class MoreScarabs
+    public class MoreScarabPatches
     {
+        public static int i = 1;
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
+        public static void BeginAdventurePostfix()
+        {
+            PLog("More Scarab Test");
+            // i++;
+        }
 
         [HarmonyReversePatch]
         [HarmonyPatch(typeof(MatchManager), "CreateNPC")]
@@ -32,16 +40,19 @@ namespace MoreScarabs
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))]
-        public static void EndTurnPrefix(MatchManager __instance)
+        public static void EndTurnPrefix(MatchManager __instance, bool forceIt = false)
         {
-            /* 
-            This is going to show how to reference a private variable
-            */
+            
             Plugin.Log.LogInfo("End Turn Prefix for Jades - START");
+            PLog("Jade START");
 
             MatchManager matchManager = __instance;
+            
 
             if (matchManager == null || matchManager.MatchIsOver)
+                return;
+             
+            if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof (matchManager.EndTurn) && !forceIt)
                 return;
 
             string scarabSpawned = Traverse.Create(matchManager).Field("scarabSpawned").GetValue<string>();
@@ -49,17 +60,21 @@ namespace MoreScarabs
             int currentRound = Traverse.Create(matchManager).Field("currentRound").GetValue<int>();
             NPC[] TeamNPC = Traverse.Create(matchManager).Field("TeamNPC").GetValue<NPC[]>();
 
-            if (currentRound == 0 || scarabSpawned == "" || (UnityEngine.Object)combatData != (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) != (UnityEngine.Object)null)
+            if (currentRound == 0 || scarabSpawned != "" || (UnityEngine.Object)combatData != (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) != (UnityEngine.Object)null)
                 return;
 
-            int spawnChance = Plugin.GuaranteedSpawn.Value ? 100 : Plugin.PercentChanceToSpawn.Value;
+            bool guaranteedSpawn = true; //Plugin.GuaranteedSpawn.Value;
+            bool onlyJade = true; //Plugin.OnlySpawnJades.Value
+            int percentToSwawn = 7; //Plugin.PercentChanceToSpawn.Value;
 
-            int scarabType = Plugin.OnlySpawnJades.Value ? 2 : matchManager.GetRandomIntRange(0, 4);
+            PLog("Guaranteed Spawn " + guaranteedSpawn);
+            PLog("Guaranteed Jade " + onlyJade);
+            int spawnChance = guaranteedSpawn ? 100 : percentToSwawn;
+
+            int scarabType = onlyJade ? 2 : matchManager.GetRandomIntRange(0, 4);
             
             // if scarabType==2 then Jade, if 1 then Gold, if 0 then Crystal. Else scourge
             scarabSpawned = scarabType == 2 ? "jadescarab" : scarabType == 1 ? "goldenscarab" : scarabType == 0 ? "crystalscarab" : "scourgescarab";
-
-
 
             bool isValidCombat = false;
             switch (Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode).NodeCombatTier)

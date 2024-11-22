@@ -13,7 +13,7 @@ namespace MoreScarabs
     public class CustomFunctions
     {
 
-        public static string debugBase = "<RenameThis>";
+        public static string debugBase = PluginInfo.PLUGIN_NAME;
         public static string perkBase = "<RenameThisForPerks>";
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace MoreScarabs
 
         public static void PLog(string s)
         {
-            Plugin.Log.LogDebug(debugBase + s);
+            Plugin.Log.LogInfo(debugBase + s);
         }
 
         /// <summary>
