@@ -47,6 +47,9 @@ namespace MoreScarabs{
             Log = Logger;
             Log.LogInfo($"{PluginInfo.PLUGIN_GUID} {PluginInfo.PLUGIN_VERSION} has loaded!");
             
+
+            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} second test (pre-register)");
+
             // GuaranteedSpawn = Config.Bind(new ConfigDefinition("Debug", "Guaranteed Spawn"), true, new ConfigDescription("It true, will guarantee 1 Scarab to spawn at the start of round 2."));
             // OnlySpawnJades = Config.Bind(new ConfigDefinition("Debug", "Only Spawn Jades"), true, new ConfigDescription("If true, will force all scarabs spawned to be Jade"));
             // PercentChanceToSpawn = Config.Bind(new ConfigDefinition("Debug", "Percent Chance to Spawn"), 7, new ConfigDescription("Set the percent chance for a scarab to spawn, overwritten by Guaranteed Spawn)"));
@@ -63,10 +66,12 @@ namespace MoreScarabs{
                 _link: @"https://github.com/binbinmods/MoreScarabs"
             );
 
+            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} third test (pre patch)");
+
             // apply patches
             harmony.PatchAll();
 
-            Log.LogInfo($"{PluginInfo.PLUGIN_GUID} post patch");
+            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} fourth test(post patch)");
             
         }
     }

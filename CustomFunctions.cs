@@ -13,7 +13,7 @@ namespace MoreScarabs
     public class CustomFunctions
     {
 
-        public static string debugBase = PluginInfo.PLUGIN_NAME;
+        public static string debugBase = "MoreScarabs Testing - ";
         public static string perkBase = "<RenameThisForPerks>";
 
         /// <summary>
