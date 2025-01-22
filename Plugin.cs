@@ -4,7 +4,7 @@ using BepInEx;
 using BepInEx.Logging;
 using BepInEx.Configuration;
 using HarmonyLib;
-using static Obeliskial_Essentials.Essentials;
+// using static Obeliskial_Essentials.Essentials;
 using System;
 
 
@@ -18,7 +18,7 @@ namespace MoreScarabs{
 
     // If you have other dependencies, such as obeliskial content, make sure to include them here.
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    [BepInDependency("com.stiffmeds.obeliskialessentials")] // this is the name of the .dll in the !libs folder.
+    // [BepInDependency("com.stiffmeds.obeliskialessentials")] // this is the name of the .dll in the !libs folder.
     [BepInProcess("AcrossTheObelisk.exe")] //Don't change this
 
     // If PluginInfo isn't working, you are either:
@@ -57,14 +57,14 @@ namespace MoreScarabs{
             // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} Config Values. Spawn: " + GuaranteedSpawn.Value + " Jade: " + OnlySpawnJades.Value + " Percent: " + PercentChanceToSpawn.Value);
 
             // Register with Obeliskial Essentials
-            RegisterMod(
-                _name: PluginInfo.PLUGIN_NAME,
-                _author: "binbin",
-                _description: "More Scarabs",
-                _version: PluginInfo.PLUGIN_VERSION,
-                _date: ModDate,
-                _link: @"https://github.com/binbinmods/MoreScarabs"
-            );
+            // RegisterMod(
+            //     _name: PluginInfo.PLUGIN_NAME,
+            //     _author: "binbin",
+            //     _description: "More Scarabs",
+            //     _version: PluginInfo.PLUGIN_VERSION,
+            //     _date: ModDate,
+            //     _link: @"https://github.com/binbinmods/MoreScarabs"
+            // );
 
             // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} third test (pre patch)");
 

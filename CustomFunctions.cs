@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Obeliskial_Content;
-using Obeliskial_Essentials;
+// using Obeliskial_Content;
+// using Obeliskial_Essentials;
 using System.IO;
 using static UnityEngine.Mathf;
 using static MoreScarabs.Plugin;
