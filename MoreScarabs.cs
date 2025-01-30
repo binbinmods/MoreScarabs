@@ -8,6 +8,8 @@ using static MoreScarabs.CustomFunctions;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using UnityEngine;
+using System.Collections.Generic;
+using static MatchManager;
 
 // Make sure your namespace is the same everywhere
 namespace MoreScarabs
@@ -92,6 +94,30 @@ namespace MoreScarabs
                 if (scarabSpawned != "") PLog("Scarab Spawned: " + scarabSpawned);
                 if ((UnityEngine.Object)combatData == (UnityEngine.Object)null) PLog("null combat");
                 if ((UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null) PLog("null mapNode");
+                return;
+            }
+
+            List<CharacterForOrder> CharOrder = Traverse.Create(matchManager).Field("CharOrder").GetValue<List<CharacterForOrder>>();
+            bool HasCorrectCharOrder = true;
+            for (int m = 0; m < CharOrder.Count; m++)
+            {
+                if (CharOrder[m].hero != null)
+                {
+                    if (CharOrder[m].hero.RoundMoved < currentRound && CharOrder[m].hero.Alive)
+                    {
+                        HasCorrectCharOrder = false;
+                        break;
+                    }
+                }
+                else if (CharOrder[m].npc.RoundMoved < currentRound && CharOrder[m].npc.Alive)
+                {
+                    HasCorrectCharOrder = false;
+                    break;
+                }
+            }
+            if(!HasCorrectCharOrder)
+            {
+                PLog("No scarab spawn - Incorrect HasCorrectCharOrder");
                 return;
             }
 
