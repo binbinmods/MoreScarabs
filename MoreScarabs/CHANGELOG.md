@@ -1,3 +1,7 @@
+# 1.1.1
+
+Removed Obeliskial Essentials requirement.
+
 # 1.1.0
 
 Update for v1.5.0

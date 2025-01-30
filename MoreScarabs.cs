@@ -85,7 +85,7 @@ namespace MoreScarabs
 
             // PLog("Loaded Traverses");
 
-            if (currentRound == 0 || currentRound== 1|| scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
+            if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             {
                 if (currentRound == 0) PLog("Round = 0");
                 if (currentRound == 1) PLog("Round = 1");
