@@ -60,11 +60,12 @@ namespace MoreScarabs
 
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))]
-        public static void EndTurnPrefix(MatchManager __instance, bool forceIt = false)
+        // [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))] NextTurnContinuePlain
+        [HarmonyPatch(typeof(MatchManager), "NextTurnContinue")] 
+        public static void NextTurnContinuePrefix(MatchManager __instance)
         {
 
-            PLog("End Turn Prefix for Jades - START");
+            PLog("Next Turn Prefix for Jades - START");
             PLog("Jade START");
 
             MatchManager matchManager = __instance;
@@ -75,7 +76,8 @@ namespace MoreScarabs
 
             // PLog("Match Isn't over");
 
-            if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof(matchManager.EndTurn) && !forceIt)
+            // if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof(matchManager.EndTurn) && !forceIt)
+            if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof(matchManager.EndTurn))
                 return;
 
             // PLog("GameStatus isn't EndTurn");
@@ -87,7 +89,8 @@ namespace MoreScarabs
 
             // PLog("Loaded Traverses");
 
-            if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
+            // if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
+            if (currentRound == 0 ||scarabSpawned != "" ||  (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             {
                 if (currentRound == 0) PLog("Round = 0");
                 if (currentRound == 1) PLog("Round = 1");
