@@ -1,4 +1,4 @@
-# 1.1.1
+# 1.2.0
 
 Removed Obeliskial Essentials requirement. Made it so that Scarabs spawn at the correct time.
 

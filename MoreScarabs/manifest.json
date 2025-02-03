@@ -1,6 +1,6 @@
 {
     "name": "More_Scarabs",
-    "version_number": "1.1.1",
+    "version_number": "1.2.0",
     "website_url": "https://github.com/binbinmods/MoreScarabs",
     "description": "Allows you to increase the spawning of Scarabs. Defaults to guaranteeing a Jade Scarab in every fight.",
     "dependencies": [

@@ -20,6 +20,7 @@ namespace MoreScarabs{
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     // [BepInDependency("com.stiffmeds.obeliskialessentials")] // this is the name of the .dll in the !libs folder.
     [BepInProcess("AcrossTheObelisk.exe")] //Don't change this
+    [BepInIncompatibility("com.stiffmeds.obeliskialessentials")]
 
     // If PluginInfo isn't working, you are either:
     // 1. Using BepInEx v6

@@ -131,7 +131,7 @@ namespace MoreScarabs
 
             PLog("Guaranteed Spawn " + guaranteedSpawn);
             PLog("Guaranteed Jade " + onlyJade);
-            int spawnChance = guaranteedSpawn ? 100 : percentToSwawn;
+            int spawnChance = guaranteedSpawn ? 101 : percentToSwawn;
 
             int scarabType = onlyJade ? 2 : matchManager.GetRandomIntRange(0, 4);
 
