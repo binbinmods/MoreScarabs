@@ -1,3 +1,7 @@
+# 1.3.0
+
+Updated for AtO v1.6.20
+
 # 1.2.0
 
 Removed Obeliskial Essentials requirement. Made it so that Scarabs spawn at the correct time.

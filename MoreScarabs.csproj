@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>com.binbin.morescarabs</AssemblyName>
     <Product>More Scarabs</Product>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -34,12 +34,16 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>../../!libs/Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="com.stiffmeds.obeliskialessentials">
+      <HintPath>../../!libs/com.stiffmeds.obeliskialessentials.dll</HintPath>
+    </Reference>
     
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="../../../plugins" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="MoreScarabs/BepInEx/plugins" />
+    <Exec Command="/usr/bin/python3 &quot;$(ProjectDir)ship_mod.py&quot;" />
   </Target>
 
 

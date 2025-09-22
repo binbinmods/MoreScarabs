@@ -42,11 +42,11 @@ namespace MoreScarabs
         {
             MatchManager matchManager = MatchManager.Instance;
 
-            PLog("Testing Reflection version before code");
+            // PLog("Testing Reflection version before code");
             MethodInfo methodInfo = matchManager.GetType().GetMethod("CreateNPC", BindingFlags.NonPublic | BindingFlags.Instance);
             var parameters = new object[] { _npcData, effectTarget, _position, generateFromReload, internalId, _cardActive, _casterInternalId };
             methodInfo.Invoke(matchManager, parameters);
-            PLog("Testing Reflection version after code");
+            // PLog("Testing Reflection version after code");
 
             // __instance.GetType().GetMethod("ActivateDeactivateButtons", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(__instance, new object[] { index });
 
@@ -61,7 +61,7 @@ namespace MoreScarabs
 
         [HarmonyPrefix]
         // [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))] NextTurnContinuePlain
-        [HarmonyPatch(typeof(MatchManager), "NextTurnContinue")] 
+        [HarmonyPatch(typeof(MatchManager), "NextTurnContinue")]
         public static void NextTurnContinuePrefix(MatchManager __instance)
         {
 
@@ -90,7 +90,7 @@ namespace MoreScarabs
             // PLog("Loaded Traverses");
 
             // if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
-            if (currentRound == 0 ||scarabSpawned != "" ||  (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
+            if (currentRound == 0 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             {
                 if (currentRound == 0) PLog("Round = 0");
                 if (currentRound == 1) PLog("Round = 1");
@@ -118,7 +118,7 @@ namespace MoreScarabs
                     break;
                 }
             }
-            if(!HasCorrectCharOrder)
+            if (!HasCorrectCharOrder)
             {
                 PLog("No scarab spawn - Incorrect HasCorrectCharOrder");
                 return;
@@ -175,7 +175,7 @@ namespace MoreScarabs
             PLog("Is it a valid combat: " + isValidCombat);
             if (isValidCombat)
             {
-                int i = matchManager.GetNPCAvailablePosition();
+                int i = matchManager.GetNPCAvailablePosition(1);
                 if (i > -1)
                 {
                     int randomIntRange = matchManager.GetRandomIntRange(0, 100);
