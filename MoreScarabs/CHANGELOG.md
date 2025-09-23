@@ -1,3 +1,9 @@
+# 1.3.1
+
+Fixed issue with spawning caused by the patch
+
+Removed incompatibility with Obeliskial Essentials
+
 # 1.3.0
 
 Updated for AtO v1.6.20

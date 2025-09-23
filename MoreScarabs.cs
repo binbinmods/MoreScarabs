@@ -32,21 +32,31 @@ namespace MoreScarabs
         //     //This is intentionally a stub
         //     throw new NotImplementedException("Reverse patch has not been executed.");
 
-        public static void CreateNPCLocal(NPCData _npcData,
+        public static void CreateNPCLocal(
+            NPCData _npcData,
             string effectTarget = "",
             int _position = -1,
             bool generateFromReload = false,
             string internalId = "",
             CardData _cardActive = null,
-            string _casterInternalId = "")
+            string _casterInternalId = "",
+            float delay = 0f,
+            bool replaceCharacter = false,
+            bool isSummon = false)
         {
             MatchManager matchManager = MatchManager.Instance;
 
-            // PLog("Testing Reflection version before code");
+            PLog("Testing Reflection version before code");
+
+
             MethodInfo methodInfo = matchManager.GetType().GetMethod("CreateNPC", BindingFlags.NonPublic | BindingFlags.Instance);
-            var parameters = new object[] { _npcData, effectTarget, _position, generateFromReload, internalId, _cardActive, _casterInternalId };
+            var parameters = new object[] { _npcData, effectTarget, _position, generateFromReload, internalId, _cardActive, _casterInternalId, delay, replaceCharacter, isSummon };
+            if (methodInfo == null)
+            {
+                PLog("methodInfo is null");
+            }
             methodInfo.Invoke(matchManager, parameters);
-            // PLog("Testing Reflection version after code");
+            PLog("Testing Reflection version after code");
 
             // __instance.GetType().GetMethod("ActivateDeactivateButtons", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(__instance, new object[] { index });
 
@@ -202,7 +212,7 @@ namespace MoreScarabs
                         }
                         else
                         {
-                            CreateNPCLocal(npc, _position: i);
+                            MatchManager.Instance.CreateNPC(npc);
                             // CreateNPCReversePatch(npc, _position: i);
                             Globals.Instance.WaitForSeconds(0.5f);
                             if (scarabType != 3)
