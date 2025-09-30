@@ -1,3 +1,7 @@
+# 1.3.2
+
+Removed unnecessary error report
+
 # 1.3.1
 
 Fixed issue with spawning caused by the patch

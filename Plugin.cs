@@ -8,6 +8,7 @@ using static Obeliskial_Essentials.Essentials;
 using BepInEx.Bootstrap;
 using System;
 using UnityEngine;
+using System.Runtime.CompilerServices;
 
 
 // The Plugin csharp file is used to 
@@ -21,7 +22,7 @@ namespace MoreScarabs
 
     // If you have other dependencies, such as obeliskial content, make sure to include them here.
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    [BepInDependency("com.stiffmeds.obeliskialessentials", Flags: BepInDependency.DependencyFlags.SoftDependency)] // this is the name of the .dll in the !libs folder.
+    [BepInDependency("com.stiffmeds.obeliskialessentials", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInProcess("AcrossTheObelisk.exe")] //Don't change this
     // [BepInIncompatibility("com.stiffmeds.obeliskialessentials")]
 
@@ -38,29 +39,53 @@ namespace MoreScarabs
         // and then use config = Config.Bind() to set the title, default value, and description of the config.
         // It automatically creates the appropriate configs.
 
+        public static ConfigEntry<bool> EnableDebugging { get; set; }
         public static ConfigEntry<bool> GuaranteedSpawn { get; set; }
         public static ConfigEntry<bool> OnlySpawnJades { get; set; }
         public static ConfigEntry<int> PercentChanceToSpawn { get; set; }
 
-        internal int ModDate = 20241024; //int.Parse(DateTime.Today.ToString("yyyyMMdd"));
+        internal static int ModDate = 20241024; //int.Parse(DateTime.Today.ToString("yyyyMMdd"));
         private readonly Harmony harmony = new(PluginInfo.PLUGIN_GUID);
         internal static ManualLogSource Log;
         internal static bool EssentialsInstalled = false;
+        internal static string debugBase = "MoreScarabs - ";
         private void Awake()
         {
 
             Log = Logger;
             Log.LogInfo($"{PluginInfo.PLUGIN_GUID} {PluginInfo.PLUGIN_VERSION} has loaded!");
 
-
-            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} second test (pre-register)");
-
+            EnableDebugging = Config.Bind(new ConfigDefinition("Debug", "Enable Debugging"), true, new ConfigDescription("If true, will enable debugging messages."));
             GuaranteedSpawn = Config.Bind(new ConfigDefinition("Debug", "Guaranteed Spawn"), true, new ConfigDescription("It true, will guarantee 1 Scarab to spawn at the start of round 2."));
             OnlySpawnJades = Config.Bind(new ConfigDefinition("Debug", "Only Spawn Jades"), true, new ConfigDescription("If true, will force all scarabs spawned to be Jade"));
             PercentChanceToSpawn = Config.Bind(new ConfigDefinition("Debug", "Percent Chance to Spawn"), 7, new ConfigDescription("Set the percent chance for a scarab to spawn, overwritten by Guaranteed Spawn)"));
 
-            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} Config Values. Spawn: " + GuaranteedSpawn.Value + " Jade: " + OnlySpawnJades.Value + " Percent: " + PercentChanceToSpawn.Value);
+            EssentialsRegister();
 
+            // apply patches
+            harmony.PatchAll();
+        }
+
+        internal static void LogDebug(string msg)
+        {
+            if (EnableDebugging.Value)
+            {
+                Log.LogDebug(debugBase + msg);
+            }
+
+        }
+        internal static void LogInfo(string msg)
+        {
+            Log.LogInfo(debugBase + msg);
+        }
+        internal static void LogError(string msg)
+        {
+            Log.LogError(debugBase + msg);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        internal static void EssentialsRegister()
+        {
             EssentialsInstalled = Chainloader.PluginInfos.ContainsKey("com.stiffmeds.obeliskialessentials");
 
             // Register with Obeliskial Essentials
@@ -69,21 +94,12 @@ namespace MoreScarabs
                 RegisterMod(
                     _name: PluginInfo.PLUGIN_NAME,
                     _author: "binbin",
-                    _description: "DevMode",
+                    _description: "More Scarabs",
                     _version: PluginInfo.PLUGIN_VERSION,
                     _date: ModDate,
-                    _link: @"https://github.com/binbinmods/DevMode"
+                    _link: @"https://github.com/binbinmods/MoreScarabs"
                 );
-
             }
-
-            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} third test (pre patch)");
-
-            // apply patches
-            harmony.PatchAll();
-
-            // Log.LogInfo($"{PluginInfo.PLUGIN_GUID} fourth test(post patch)");
-
         }
     }
 }

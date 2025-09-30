@@ -4,7 +4,7 @@ using BepInEx.Configuration;
 using HarmonyLib;
 // using static Obeliskial_Essentials.Essentials;
 using System;
-using static MoreScarabs.CustomFunctions;
+using static MoreScarabs.Plugin;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using UnityEngine;
@@ -46,25 +46,25 @@ namespace MoreScarabs
         {
             MatchManager matchManager = MatchManager.Instance;
 
-            PLog("Testing Reflection version before code");
+            LogDebug("Testing Reflection version before code");
 
 
             MethodInfo methodInfo = matchManager.GetType().GetMethod("CreateNPC", BindingFlags.NonPublic | BindingFlags.Instance);
             var parameters = new object[] { _npcData, effectTarget, _position, generateFromReload, internalId, _cardActive, _casterInternalId, delay, replaceCharacter, isSummon };
             if (methodInfo == null)
             {
-                PLog("methodInfo is null");
+                LogDebug("methodInfo is null");
             }
             methodInfo.Invoke(matchManager, parameters);
-            PLog("Testing Reflection version after code");
+            LogDebug("Testing Reflection version after code");
 
             // __instance.GetType().GetMethod("ActivateDeactivateButtons", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(__instance, new object[] { index });
 
             // Alternative
-            // PLog("Testing Traverse Create NPC - START");
+            // LogDebug("Testing Traverse Create NPC - START");
             // object[] arguments = [_npcData, effectTarget, _position, generateFromReload, internalId, _cardActive];
             // Traverse.Create(matchManager).Method("CreateNPC").GetValue(arguments);
-            // PLog("Testing Traverse Create NPC - END");
+            // LogDebug("Testing Traverse Create NPC - END");
 
         }
 
@@ -75,8 +75,8 @@ namespace MoreScarabs
         public static void NextTurnContinuePrefix(MatchManager __instance)
         {
 
-            PLog("Next Turn Prefix for Jades - START");
-            PLog("Jade START");
+            LogDebug("Next Turn Prefix for Jades - START");
+            LogDebug("Jade START");
 
             MatchManager matchManager = __instance;
 
@@ -84,29 +84,29 @@ namespace MoreScarabs
             if (matchManager == null || matchManager.MatchIsOver)
                 return;
 
-            // PLog("Match Isn't over");
+            // LogDebug("Match Isn't over");
 
             // if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof(matchManager.EndTurn) && !forceIt)
             if (Traverse.Create(matchManager).Field("gameStatus").GetValue<string>() == nameof(matchManager.EndTurn))
                 return;
 
-            // PLog("GameStatus isn't EndTurn");
+            // LogDebug("GameStatus isn't EndTurn");
 
             string scarabSpawned = Traverse.Create(matchManager).Field("scarabSpawned").GetValue<string>();
             CombatData combatData = Traverse.Create(matchManager).Field("combatData").GetValue<CombatData>();
             int currentRound = Traverse.Create(matchManager).Field("currentRound").GetValue<int>();
             NPC[] TeamNPC = Traverse.Create(matchManager).Field("TeamNPC").GetValue<NPC[]>();
 
-            // PLog("Loaded Traverses");
+            // LogDebug("Loaded Traverses");
 
             // if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             if (currentRound == 0 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             {
-                if (currentRound == 0) PLog("Round = 0");
-                if (currentRound == 1) PLog("Round = 1");
-                if (scarabSpawned != "") PLog("Scarab Spawned: " + scarabSpawned);
-                if ((UnityEngine.Object)combatData == (UnityEngine.Object)null) PLog("null combat");
-                if ((UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null) PLog("null mapNode");
+                if (currentRound == 0) LogDebug("Round = 0");
+                if (currentRound == 1) LogDebug("Round = 1");
+                if (scarabSpawned != "") LogDebug("Scarab Spawned: " + scarabSpawned);
+                if ((UnityEngine.Object)combatData == (UnityEngine.Object)null) LogDebug("null combat");
+                if ((UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null) LogDebug("null mapNode");
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace MoreScarabs
             }
             if (!HasCorrectCharOrder)
             {
-                PLog("No scarab spawn - Incorrect HasCorrectCharOrder");
+                LogDebug("No scarab spawn - Incorrect HasCorrectCharOrder");
                 return;
             }
 
@@ -139,8 +139,8 @@ namespace MoreScarabs
             bool onlyJade = Plugin.OnlySpawnJades.Value;
             int percentToSwawn = Plugin.PercentChanceToSpawn.Value;
 
-            PLog("Guaranteed Spawn " + guaranteedSpawn);
-            PLog("Guaranteed Jade " + onlyJade);
+            LogDebug("Guaranteed Spawn " + guaranteedSpawn);
+            LogDebug("Guaranteed Jade " + onlyJade);
             int spawnChance = guaranteedSpawn ? 101 : percentToSwawn;
 
             int scarabType = onlyJade ? 2 : matchManager.GetRandomIntRange(0, 4);
@@ -182,7 +182,7 @@ namespace MoreScarabs
                     }
                     break;
             }
-            PLog("Is it a valid combat: " + isValidCombat);
+            LogDebug("Is it a valid combat: " + isValidCombat);
             if (isValidCombat)
             {
                 int i = matchManager.GetNPCAvailablePosition(1);
@@ -208,7 +208,7 @@ namespace MoreScarabs
                         NPCData npc = Globals.Instance.GetNPC(scarabSpawned + str);
                         if ((UnityEngine.Object)npc == (UnityEngine.Object)null)
                         {
-                            PLog("scarabData Null for scarab => " + scarabSpawned + str);
+                            LogDebug("scarabData Null for scarab => " + scarabSpawned + str);
                         }
                         else
                         {
@@ -261,7 +261,7 @@ namespace MoreScarabs
                             GameManager.Instance.PlayLibraryAudio("glitter", 0.25f);
                             Globals.Instance.WaitForSeconds(0.5f);
 
-                            PLog("Attempting to set traverses");
+                            LogDebug("Attempting to set traverses");
 
                             Traverse.Create(matchManager).Field("scarabSpawned").SetValue(scarabSpawned);
                             Traverse.Create(matchManager).Field("combatData").SetValue(combatData);
@@ -272,8 +272,8 @@ namespace MoreScarabs
                 }
             }
 
-            // PLog("traverses set");
-            PLog("End Turn Prefix for Jades - END");
+            // LogDebug("traverses set");
+            LogDebug("End Turn Prefix for Jades - END");
         }
     }
 }
