@@ -49,6 +49,9 @@ namespace MoreScarabs
         internal static ManualLogSource Log;
         internal static bool EssentialsInstalled = false;
         internal static string debugBase = "MoreScarabs - ";
+        public static string PluginName;
+        public static string PluginVersion;
+        public static string PluginGUID;
         private void Awake()
         {
 
@@ -60,10 +63,22 @@ namespace MoreScarabs
             OnlySpawnJades = Config.Bind(new ConfigDefinition("Debug", "Only Spawn Jades"), true, new ConfigDescription("If true, will force all scarabs spawned to be Jade"));
             PercentChanceToSpawn = Config.Bind(new ConfigDefinition("Debug", "Percent Chance to Spawn"), 7, new ConfigDescription("Set the percent chance for a scarab to spawn, overwritten by Guaranteed Spawn)"));
 
-            EssentialsRegister();
+            PluginName = PluginInfo.PLUGIN_NAME;
+            PluginVersion = PluginInfo.PLUGIN_VERSION;
+            PluginGUID = PluginInfo.PLUGIN_GUID;
+            // apply patches, this functionally runs all the code for Harmony, running your mod
 
-            // apply patches
+            if (EssentialsCompatibility.Enabled)
+            {
+                EssentialsCompatibility.EssentialsRegister();
+            }
+            else
+            {
+                LogDebug("Essentials is not installed. Mod will load normally, but Essentials features are unavaiable.");
+            }
             harmony.PatchAll();
+
+
         }
 
         internal static void LogDebug(string msg)
@@ -83,23 +98,6 @@ namespace MoreScarabs
             Log.LogError(debugBase + msg);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        internal static void EssentialsRegister()
-        {
-            EssentialsInstalled = Chainloader.PluginInfos.ContainsKey("com.stiffmeds.obeliskialessentials");
 
-            // Register with Obeliskial Essentials
-            if (EssentialsInstalled)
-            {
-                RegisterMod(
-                    _name: PluginInfo.PLUGIN_NAME,
-                    _author: "binbin",
-                    _description: "More Scarabs",
-                    _version: PluginInfo.PLUGIN_VERSION,
-                    _date: ModDate,
-                    _link: @"https://github.com/binbinmods/MoreScarabs"
-                );
-            }
-        }
     }
 }

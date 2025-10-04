@@ -1,3 +1,7 @@
+# 1.3.3
+
+Prevented from submitting Weekly Scores and removed issue with Essentials again
+
 # 1.3.2
 
 Removed unnecessary error report

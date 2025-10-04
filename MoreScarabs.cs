@@ -75,8 +75,8 @@ namespace MoreScarabs
         public static void NextTurnContinuePrefix(MatchManager __instance)
         {
 
-            LogDebug("Next Turn Prefix for Jades - START");
-            LogDebug("Jade START");
+            // LogDebug("Next Turn Prefix for Jades - START");
+            // LogDebug("Jade START");
 
             MatchManager matchManager = __instance;
 
@@ -102,9 +102,9 @@ namespace MoreScarabs
             // if (currentRound == 0 || currentRound == 1 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             if (currentRound == 0 || scarabSpawned != "" || (UnityEngine.Object)combatData == (UnityEngine.Object)null || (UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null)
             {
-                if (currentRound == 0) LogDebug("Round = 0");
-                if (currentRound == 1) LogDebug("Round = 1");
-                if (scarabSpawned != "") LogDebug("Scarab Spawned: " + scarabSpawned);
+                // if (currentRound == 0) LogDebug("Round = 0");
+                // if (currentRound == 1) LogDebug("Round = 1");
+                // if (scarabSpawned != "") LogDebug("Scarab Spawned: " + scarabSpawned);
                 if ((UnityEngine.Object)combatData == (UnityEngine.Object)null) LogDebug("null combat");
                 if ((UnityEngine.Object)Globals.Instance.GetNodeData(AtOManager.Instance.currentMapNode) == (UnityEngine.Object)null) LogDebug("null mapNode");
                 return;
@@ -139,8 +139,8 @@ namespace MoreScarabs
             bool onlyJade = Plugin.OnlySpawnJades.Value;
             int percentToSwawn = Plugin.PercentChanceToSpawn.Value;
 
-            LogDebug("Guaranteed Spawn " + guaranteedSpawn);
-            LogDebug("Guaranteed Jade " + onlyJade);
+            // LogDebug("Guaranteed Spawn " + guaranteedSpawn);
+            // LogDebug("Guaranteed Jade " + onlyJade);
             int spawnChance = guaranteedSpawn ? 101 : percentToSwawn;
 
             int scarabType = onlyJade ? 2 : matchManager.GetRandomIntRange(0, 4);

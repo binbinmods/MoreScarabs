@@ -1,7 +1,9 @@
 {
   "name": "More_Scarabs",
-  "version_number": "1.3.2",
+  "version_number": "1.3.3",
   "website_url": "https://github.com/binbinmods/MoreScarabs",
   "description": "Allows you to increase the spawning of Scarabs. Defaults to guaranteeing a Jade Scarab in every fight.",
-  "dependencies": ["BepInEx-BepInExPack_AcrossTheObelisk-5.4.23"]
+  "dependencies": [
+    "BepInEx-BepInExPack_AcrossTheObelisk-5.4.23"
+  ]
 }
