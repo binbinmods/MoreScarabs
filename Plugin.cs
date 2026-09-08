@@ -9,6 +9,7 @@ using BepInEx.Bootstrap;
 using System;
 using UnityEngine;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 
 // The Plugin csharp file is used to 
@@ -81,22 +82,31 @@ namespace MoreScarabs
 
         }
 
-        internal static void LogDebug(string msg)
+        internal static void LogDebug(string msg, [CallerMemberName] string caller = "")
         {
             if (EnableDebugging.Value)
             {
-                Log.LogDebug(debugBase + msg);
+                Log.LogDebug($"{debugBase}- {caller} - {msg}");
             }
-
         }
         internal static void LogInfo(string msg)
         {
             Log.LogInfo(debugBase + msg);
         }
-        internal static void LogError(string msg)
+        internal static void LogError(string msg, [CallerMemberName] string caller = "")
         {
-            Log.LogError(debugBase + msg);
+            Log.LogError($"{debugBase}- {caller} - {msg}");
         }
+
+        public static IEnumerator RunAfter(IEnumerator original, Action action)
+        {
+            while (original.MoveNext())
+                yield return original.Current;
+            // The original enumerator has finished. _NPCsSource is set now.
+            action();
+        }
+
+
 
 
     }

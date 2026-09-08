@@ -1,3 +1,7 @@
+# 1.4.0
+
+Update for AtO v1.7.6.3
+
 # 1.3.3
 
 Prevented from submitting Weekly Scores and removed issue with Essentials again

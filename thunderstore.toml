@@ -1,0 +1,32 @@
+[config]
+schemaVersion = "1.0.0"
+
+[package]
+namespace = "Binbin"
+name = "More_Scarabs"
+versionNumber = "1.4.0"
+description = "Allows you to increase the spawning of Scarabs. Defaults to guaranteeing a Jade Scarab in every fight."
+websiteUrl = "https://github.com/binbinmods/MoreScarabs"
+containsNsfwContent = false
+[package.dependencies]
+BepInEx-BepInExPack_AcrossTheObelisk = "5.4.23"
+
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "./MoreScarabs"
+target = ""
+
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "across-the-obelisk", ]
+[publish.categories]
+across-the-obelisk = [ "mods", ]
+
+
+
